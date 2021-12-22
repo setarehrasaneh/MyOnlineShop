@@ -1,0 +1,40 @@
+﻿<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+
+    <h3>سبد خرید</h3>
+    <table cellpadding="2" cellspacing="2" border="1" >
+        <tr>
+            <th>عملیات</th>
+            <th>نام کالا</th>
+            <th>قیمت واحد</th>
+            <th>سود</th>
+            <th>تعداد</th>
+            <th>جمع مبلغ</th>
+        </tr>
+        @foreach (var item in ViewBag.cart)
+        {
+            <tr>
+                <td><a asp-controller="cart" asp-action="RemoveFromCart" asp-route-id="@item.Product.ProductId">حذف</a></td>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Price</td>
+                <td>@item.Product.Profit</td>
+                <td>@item.Qty</td>
+                <td>@((item.Product.Price + item.Product.Profit) * item.Qty)</td>
+            </tr>
+        }
+        <tr>
+            <td align="right" colspan="6">جمع فاکتور</td>
+            <td>
+                @ViewBag.total
+            </td>
+        </tr>
+    </table>
+    <br>
+        <a class="btn-secondary" asp-controller="Home" asp-action="index">بازگشت به فروشگاه</a>
+        <a class="btn-primary" asp-controller="Order" asp-action="SubmitOrder">ادامه خرید</a>
+
+</body>
+</html>
