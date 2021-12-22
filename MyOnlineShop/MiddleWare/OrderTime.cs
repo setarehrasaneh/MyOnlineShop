@@ -26,7 +26,7 @@ namespace MyOnlineShop.MiddleWare
 
                 if (! (currentHour > 8 && currentHour <= 19))
                 {
-                    await httpContext.Response.WriteAsync("You Cant Submit Order Before 8:00 And After 19:00");
+                    httpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable ;
                 }
                 else
                 {

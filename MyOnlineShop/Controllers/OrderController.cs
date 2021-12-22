@@ -4,6 +4,7 @@ using MyOnlineShop.Domain.Entities;
 using MyOnlineShop.Domain.Helpers;
 using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.Domain.Service;
+using MyOnlineShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,32 @@ namespace MyOnlineShop.Controllers
             this._orderService = orderService;
         }
 
-        public IActionResult SubmitOrder()
+        public IActionResult FinalizeOrder()
         {
             var cart = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart");
+
             if (_orderService.GetTotalPrice(cart) < 50000)
             {
-               HttpContext.Response.WriteAsync("ثبت سفارش برای مبالغ کمتر از 50000 امکان پذیر نمیباشد");
+                throw new Exception("ثبت سفارش برای مبالغ کمتر از 50000 امکان پذیر نمیباشد");
             }
+
+            OrderViewModel orderViewModel = new OrderViewModel
+            {
+                FragileItems = _orderService.GetFragileItems(cart),
+                NormalItems = _orderService.GetNormalItems(cart),
+                TotalPrice = _orderService.GetTotalPrice(cart)
+            };
+
+            return View(orderViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult SubmitOrder()
+        {
+            var order = new Order
+            {
+                OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart")
+            };
 
             return View();
         }

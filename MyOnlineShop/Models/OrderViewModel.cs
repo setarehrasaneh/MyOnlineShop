@@ -8,9 +8,9 @@ namespace MyOnlineShop.Models
 {
     public class OrderViewModel
     {
-        public Order Order { get; set; }
-        public List<Product> Products { get; set; }
-        public List<Customer> Customers { get; set; }
+        public List<OrderItem> NormalItems { get; set; }
+        public List<OrderItem> FragileItems { get; set; }
+        public decimal TotalPrice { get; set; }
 
     }
 }

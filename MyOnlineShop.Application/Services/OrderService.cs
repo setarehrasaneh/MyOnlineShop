@@ -1,4 +1,5 @@
 ﻿using MyOnlineShop.Domain.Entities;
+using MyOnlineShop.Domain.Enums;
 using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.Domain.Service;
 using System;
@@ -37,6 +38,16 @@ namespace MyOnlineShop.Application.Services
             }
             return orderItems;
             }
+
+        public List<OrderItem> GetFragileItems(List<OrderItem> orderItems)
+        {
+            return orderItems.Where(items => items.Product.ProductType == ProductType.Fragile).ToList();
+        }
+
+        public List<OrderItem> GetNormalItems(List<OrderItem> orderItems)
+        {
+            return orderItems.Where(items => items.Product.ProductType == ProductType.Normal).ToList();
+        }
 
         public decimal GetTotalPrice(List<OrderItem> orderItems)
         {

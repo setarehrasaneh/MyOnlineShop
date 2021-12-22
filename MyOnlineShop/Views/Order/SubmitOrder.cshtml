@@ -1,0 +1,52 @@
+﻿@model MyOnlineShop.Models.OrderViewModel
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+
+    @if (Model.FragileItems.Count != 0)
+    {
+        <h3>کالاهای شکستنی ارسال توسط پست پیشتاز</h3>
+        <table cellpadding="2" cellspacing="2" border="1">
+            <tr>
+                <th>نام کالا</th>
+            </tr>
+            @foreach (var item in Model.FragileItems)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                </tr>
+            }
+        </table>
+        <br>
+    }
+
+    @if (Model.NormalItems.Count != 0)
+    {
+        <h3>کالاهای عادی ارسال توسط پست عادی</h3>
+        <table cellpadding="2" cellspacing="2" border="1">
+            <tr>
+                <th>نام کالا</th>
+            </tr>
+            @foreach (var item in Model.NormalItems)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                </tr>
+            }
+        </table>
+        <br />
+    }
+
+        <div align="right" colspan="6">جمع فاکتور</div>
+        <div class="alert-info">
+            @Model.TotalPrice
+        </div>
+
+        <a class="btn-secondary" asp-controller="Cart" asp-action="index">بازگشت به سبد خرید</a>
+        <a class="btn-primary" asp-controller="Order" asp-action="SubmitOrder">ثبت نهایی</a>
+
+    </body>
+</html>
