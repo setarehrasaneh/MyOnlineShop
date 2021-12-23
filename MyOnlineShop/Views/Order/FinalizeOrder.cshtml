@@ -50,13 +50,14 @@
     </div>
 
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="کد تخفیف">
-        <button class="btn btn-outline-secondary" onclick="SubmitDiscount()>اعمال کد تخفیف</button>
+        <input type="text" class="form-control"  id="discount" placeholder="کد تخفیف">
+        <button class="btn btn-outline-secondary" onclick="SubmitDiscount()">اعمال کد تخفیف</button>
     </div>
 
     <div class="row">جمع فاکتور</div>
-    <div class="alert-info" align="right" class="col-md-6">
-        @Model.TotalPrice
+    <div class="alert-info" align="right" class="col-md-6" >
+        <span id="totalPrice"> @Model.TotalPrice</span> 
+        <span class="text-hide" id="finalPrice"> @Model.TotalPrice</span> 
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
@@ -69,23 +70,22 @@
 </html>
 
 <script type="text/javascript">
-    function submitStudent() {
-        var data = $("#studenteForm").serialize();
-        console.log(data);
-        alert(data);
+    function SubmitDiscount() {
+
+        var code = $("#discount").val();
+        var finalprice = $("#finalPrice").text();
         $.ajax({
             type: 'POST',
-            url: '/Home/CreateStudent',
-            contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
-            data: data,
-            success: function (result) {
-                alert('Successfully received Data ');
-                console.log(result);
+            contentType: "application/json",
+            url: '/Order/SubmitDiscount',
+            data: JSON.stringify({ code, finalprice }),
+            success: function (result) {                
+                $("#totalPrice").text(result).append('<del> ' + finalprice + '</del>') 
             },
-            error: function () {
-                alert('Failed to receive the Data');
-                console.log('Failed ');
-            }
+            //error: function () {
+            //    alert('Failed to receive the Data');
+            //    console.log('Failed ');
+            //}
         })
     }
 

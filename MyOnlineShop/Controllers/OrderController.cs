@@ -45,19 +45,19 @@ namespace MyOnlineShop.Controllers
                 OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart")
             };
 
-            string message;
             if (_orderService.SubmitOrder(order))
             {
                 HttpContext.Session.Clear();
-                message = "درخواست شما با موفقیت ثبت شد";
             };
            
             return View();
         }
 
-        public IActionResult SubmitDiscount(string code)
+        [HttpPost]
+        public IActionResult SubmitDiscount([FromBody] DiscountViewModel discountViewModel)
         {
-                return View();
+            var result = _orderService.GetFactorTotalPrice(discountViewModel.Code, decimal.Parse(discountViewModel.FinalPrice));
+            return Json(result);
         }
     }
 }

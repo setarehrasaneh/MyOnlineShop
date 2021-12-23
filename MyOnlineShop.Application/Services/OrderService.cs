@@ -14,11 +14,17 @@ namespace MyOnlineShop.Application.Services
 
         private readonly IProductRepository _productRepository;
         private readonly IOrderRepository _orderRepository;
+        private readonly IDiscountRepository _discountRepository;
 
-        public OrderService(IProductRepository productRepository , IOrderRepository orderRepository)
+        public OrderService(
+            IProductRepository productRepository,
+            IOrderRepository orderRepository,
+            IDiscountRepository discountRepository
+            )
         {
             this._productRepository = productRepository;
             this._orderRepository = orderRepository;
+            this._discountRepository = discountRepository;
         } 
         public List<OrderItem> AddItemsToOrder(List<OrderItem> orderItems , int id)
         {
@@ -40,6 +46,27 @@ namespace MyOnlineShop.Application.Services
             }
             return orderItems;
             }
+
+        public decimal GetFactorTotalPrice(string code, decimal totalPrice)
+        {
+            var discount = _discountRepository.FindDiscount(code);
+
+            if (discount != null)
+            {
+                if (discount.DiscountType == DiscountType.Amount)
+                {
+                    return totalPrice - discount.Value;
+                }
+                else
+                {
+                    return totalPrice - (totalPrice * discount.Value / 100);
+                }
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         public List<OrderItem> GetFragileItems(List<OrderItem> orderItems)
         {

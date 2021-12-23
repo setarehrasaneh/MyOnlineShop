@@ -34,6 +34,7 @@ namespace MyOnlineShop
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IDiscountRepository, DiscountRepository> ();
             services.AddSession();
             services.AddDbContext<ApplicationContext>(
                  options => options.UseSqlServer(Configuration.GetConnectionString("MyOnlineShop")));

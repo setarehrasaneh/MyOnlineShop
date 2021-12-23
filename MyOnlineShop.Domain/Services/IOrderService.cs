@@ -13,5 +13,6 @@ namespace MyOnlineShop.Domain.Service
         List<OrderItem> GetNormalItems(List<OrderItem> orderItems);
         List<OrderItem> GetFragileItems(List<OrderItem> orderItems);
         bool SubmitOrder(Order order);
+        decimal GetFactorTotalPrice(string code, decimal totalPrice);
     }
 }
