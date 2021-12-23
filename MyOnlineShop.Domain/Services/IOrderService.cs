@@ -12,6 +12,6 @@ namespace MyOnlineShop.Domain.Service
         List<OrderItem> RemoveItemFromOrder(List<OrderItem> orderItems, int id);
         List<OrderItem> GetNormalItems(List<OrderItem> orderItems);
         List<OrderItem> GetFragileItems(List<OrderItem> orderItems);
-        void SubmitOrder(Order order);
+        bool SubmitOrder(Order order);
     }
 }

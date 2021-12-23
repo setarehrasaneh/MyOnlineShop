@@ -2,13 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using MyOnlineShop.Domain.Entities;
 using MyOnlineShop.Domain.Helpers;
-using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.Domain.Service;
 using MyOnlineShop.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyOnlineShop.Controllers
 {
@@ -41,7 +38,6 @@ namespace MyOnlineShop.Controllers
             return View(orderViewModel);
         }
 
-        [HttpPost]
         public IActionResult SubmitOrder()
         {
             var order = new Order
@@ -49,7 +45,19 @@ namespace MyOnlineShop.Controllers
                 OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart")
             };
 
+            string message;
+            if (_orderService.SubmitOrder(order))
+            {
+                HttpContext.Session.Clear();
+                message = "درخواست شما با موفقیت ثبت شد";
+            };
+           
             return View();
+        }
+
+        public IActionResult SubmitDiscount(string code)
+        {
+                return View();
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyOnlineShop.InfraStructure;
 
 namespace MyOnlineShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20211222201647_removeProductId")]
+    partial class removeProductId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,27 +38,6 @@ namespace MyOnlineShop.DataAccess.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("MyOnlineShop.Domain.Entities.Discount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DiscountType")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Value")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Discount");
-                });
-
             modelBuilder.Entity("MyOnlineShop.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -67,14 +48,12 @@ namespace MyOnlineShop.DataAccess.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DiscountId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("discount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("OrderId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("DiscountId");
 
                     b.ToTable("Orders");
                 });
@@ -139,12 +118,6 @@ namespace MyOnlineShop.DataAccess.Migrations
                     b.HasOne("MyOnlineShop.Domain.Entities.Customer", null)
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId");
-
-                    b.HasOne("MyOnlineShop.Domain.Entities.Discount", "Discount")
-                        .WithMany()
-                        .HasForeignKey("DiscountId");
-
-                    b.Navigation("Discount");
                 });
 
             modelBuilder.Entity("MyOnlineShop.Domain.Entities.OrderItem", b =>

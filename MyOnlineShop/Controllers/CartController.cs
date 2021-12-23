@@ -44,8 +44,5 @@ namespace MyOnlineShop.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", newCart);
             return RedirectToAction("Index");
         }
-
-
-
     }
 }

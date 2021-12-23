@@ -7,6 +7,6 @@ namespace MyOnlineShop.Domain.Repositories
 {
     public interface IOrderRepository
     {
-        void SubmitOrder(Order order);
+        bool SubmitOrder(Order order);
     }
 }

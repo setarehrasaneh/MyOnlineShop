@@ -1,4 +1,5 @@
-﻿using MyOnlineShop.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MyOnlineShop.Domain.Entities;
 using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.InfraStructure;
 using System;
@@ -15,10 +16,20 @@ namespace MyOnlineShop.DataAccess.Repositories
         {
             this._context = context;
         }
-        public void SubmitOrder(Order order)
+        public bool SubmitOrder(Order order)
         {
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+            try
+            {
+                _context.Orders.Add(order);
+                order.OrderItems.ForEach(x => _context.Products.Attach(x.Product));
+                _context.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

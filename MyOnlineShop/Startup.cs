@@ -51,7 +51,7 @@ namespace MyOnlineShop
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseSession();
-            app.UseOrderTime();
+           // app.UseOrderTime();
 
             app.UseStaticFiles();
 

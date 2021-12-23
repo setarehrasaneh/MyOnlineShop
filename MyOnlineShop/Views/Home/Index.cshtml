@@ -3,26 +3,32 @@
 @{
     ViewData["Title"] = "ثبت سفارش";
 }
+<html dir="rtl" lang="ar">
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div class="text-center">
+        <h3 class="text-center">لیست محصولات</h3>
 
-<div class="text-center">
-    <h1 class="display-4"> لیست محصولات</h1>
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-3">
-                <div class="card">
-                    <img src="/images/@(item.ProductId).jpg" height="160" width="160" class="card-img-top img-thumbnail" />
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Name</h5>
-                        <h7 class="card-title">@item.Price ریال</h7>
-                        <br />
-                        <a asp-controller="cart" asp-action="AddToCart" asp-route-id="@item.ProductId">افزودن به سبد خرید</a>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-3">
+                    <div class="card">
+                        <img src="/images/@(item.ProductId).jpg" height="160" width="160" class="card-img-top img-thumbnail" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Name</h5>
+                            <h7 class="card-title">@item.Price ریال</h7>
+                            <br />
+                            <a asp-controller="cart" asp-action="AddToCart" asp-route-id="@item.ProductId">افزودن به سبد خرید</a>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
-        }
+            }
 
+        </div>
     </div>
-</div>
-
+</body>
+</html>

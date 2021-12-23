@@ -1,0 +1,92 @@
+﻿@model MyOnlineShop.Models.OrderViewModel
+
+<html dir="rtl" lang="ar">
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <h3 class="text-center">شیوه ارسال</h3>
+
+    <div class="row">
+        <div class="col-md-6">
+            @if (Model.FragileItems.Count != 0)
+            {
+                <table cellpadding="2" cellspacing="2" border="1" class="table">
+                    <tr class="text-center table-danger">
+                        <th>ارسال با پست پیشتاز</th>
+                    </tr>
+                    <tr class="text-center">
+                        <th class="table-dark">نام کالا</th>
+                    </tr>
+                    @foreach (var item in Model.FragileItems)
+                    {
+                        <tr class="text-center">
+                            <td>@item.Product.Name</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+        <div class="col-md-6 w-50">
+
+            @if (Model.NormalItems.Count != 0)
+            {
+                <table cellpadding="2" cellspacing="2" border="1" class="table">
+                    <tr class="text-center  table-success">
+                        <th>ارسال عادی</th>
+                    </tr>
+                    <tr class="text-center">
+                        <th class="table-dark">نام کالا</th>
+                    </tr>
+                    @foreach (var item in Model.NormalItems)
+                    {
+                        <tr class="text-center">
+                            <td>@item.Product.Name</td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="کد تخفیف">
+        <button class="btn btn-outline-secondary" onclick="SubmitDiscount()>اعمال کد تخفیف</button>
+    </div>
+
+    <div class="row">جمع فاکتور</div>
+    <div class="alert-info" align="right" class="col-md-6">
+        @Model.TotalPrice
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-secondary" asp-controller="Cart" asp-action="index">بازگشت به سبد خرید</a>
+        <a class="btn btn-primary" asp-controller="Order" asp-action="SubmitOrder">ثبت نهایی</a>
+    </div>
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+    function submitStudent() {
+        var data = $("#studenteForm").serialize();
+        console.log(data);
+        alert(data);
+        $.ajax({
+            type: 'POST',
+            url: '/Home/CreateStudent',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+            data: data,
+            success: function (result) {
+                alert('Successfully received Data ');
+                console.log(result);
+            },
+            error: function () {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
+            }
+        })
+    }
+
+</script>

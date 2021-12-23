@@ -13,10 +13,12 @@ namespace MyOnlineShop.Application.Services
     {
 
         private readonly IProductRepository _productRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public OrderService(IProductRepository productRepository)
+        public OrderService(IProductRepository productRepository , IOrderRepository orderRepository)
         {
             this._productRepository = productRepository;
+            this._orderRepository = orderRepository;
         } 
         public List<OrderItem> AddItemsToOrder(List<OrderItem> orderItems , int id)
         {
@@ -34,7 +36,7 @@ namespace MyOnlineShop.Application.Services
             }
             else
             {
-                orderItems.Add(new OrderItem { Product = _productRepository.GetAll().Find(x => x.ProductId == id), Qty = 1 });
+                orderItems.Add(new OrderItem { Product = _productRepository.GetAll().Find(x => x.ProductId == id), Qty = 1});
             }
             return orderItems;
             }
@@ -51,7 +53,11 @@ namespace MyOnlineShop.Application.Services
 
         public decimal GetTotalPrice(List<OrderItem> orderItems)
         {
-            return orderItems.Sum(item => (item.Product.Price + item.Product.Profit) * item.Qty);
+            if (orderItems != null && orderItems.Any())
+            {
+                return orderItems.Sum(item => (item.Product.Price + item.Product.Profit) * item.Qty);
+            }
+            return 0;
         }
 
         public List<OrderItem> RemoveItemFromOrder(List<OrderItem> orderItems, int id)
@@ -59,6 +65,11 @@ namespace MyOnlineShop.Application.Services
             int index = orderItems.FindIndex(a => a.Product.ProductId == id);
             orderItems.RemoveAt(index);
             return orderItems;
+        }
+
+        public bool SubmitOrder(Order order)
+        {
+           return _orderRepository.SubmitOrder(order);
         }
     }
 }
