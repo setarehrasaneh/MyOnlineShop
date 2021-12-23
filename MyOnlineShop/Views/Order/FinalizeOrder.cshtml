@@ -6,66 +6,69 @@
 </head>
 <body>
     <h3 class="text-center">شیوه ارسال</h3>
-
-    <div class="row">
-        <div class="col-md-6">
+    <input class="text-hide" asp-for="Finalprice" id="finalPrice" />
+    <input class="text-hide" asp-for=@Model.DiscountId id="discountId"/>
+    <form method="post">
+        <div class="row">
             @if (Model.FragileItems.Count != 0)
             {
-                <table cellpadding="2" cellspacing="2" border="1" class="table">
-                    <tr class="text-center table-danger">
-                        <th>ارسال با پست پیشتاز</th>
-                    </tr>
-                    <tr class="text-center">
-                        <th class="table-dark">نام کالا</th>
-                    </tr>
-                    @foreach (var item in Model.FragileItems)
+                <div class="col-md-6">
+
                     {
-                        <tr class="text-center">
-                            <td>@item.Product.Name</td>
+                    <table cellpadding="2" cellspacing="2" border="1" class="table">
+                        <tr class="text-center table-danger">
+                            <th>ارسال با پست پیشتاز</th>
                         </tr>
-                    }
-                </table>
+                        <tr class="text-center">
+                            <th class="table-dark">نام کالا</th>
+                        </tr>
+                        @foreach (var item in Model.FragileItems)
+                        {
+                            <tr class="text-center">
+                                <td>@item.Product.Name</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             }
-        </div>
-        <div class="col-md-6 w-50">
 
             @if (Model.NormalItems.Count != 0)
             {
-                <table cellpadding="2" cellspacing="2" border="1" class="table">
-                    <tr class="text-center  table-success">
-                        <th>ارسال عادی</th>
-                    </tr>
-                    <tr class="text-center">
-                        <th class="table-dark">نام کالا</th>
-                    </tr>
-                    @foreach (var item in Model.NormalItems)
-                    {
-                        <tr class="text-center">
-                            <td>@item.Product.Name</td>
+                <div class="col-md-6">
+                    <table cellpadding="2" cellspacing="2" border="1" class="table">
+                        <tr class="text-center  table-success">
+                            <th>ارسال عادی</th>
                         </tr>
-                    }
-                </table>
+                        <tr class="text-center">
+                            <th class="table-dark">نام کالا</th>
+                        </tr>
+                        @foreach (var item in Model.NormalItems)
+                        {
+                            <tr class="text-center">
+                                <td>@item.Product.Name</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             }
+            </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="discount" placeholder="کد تخفیف">
+            <a class="btn btn-outline-secondary"  onclick="SubmitDiscount()">اعمال کد تخفیف</a>
         </div>
-    </div>
 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control"  id="discount" placeholder="کد تخفیف">
-        <button class="btn btn-outline-secondary" onclick="SubmitDiscount()">اعمال کد تخفیف</button>
-    </div>
+        <div class="row">جمع فاکتور</div>
+        <div class="alert-info" align="right" class="col-md-6">
+            <span id="totalPrice"> @Model.Finalprice</span>
+        </div>
 
-    <div class="row">جمع فاکتور</div>
-    <div class="alert-info" align="right" class="col-md-6" >
-        <span id="totalPrice"> @Model.TotalPrice</span> 
-        <span class="text-hide" id="finalPrice"> @Model.TotalPrice</span> 
-    </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a class="btn btn-secondary" asp-controller="Cart" asp-action="index">بازگشت به سبد خرید</a>
+            <button class="btn btn-primary" asp-controller="Order" asp-action="SubmitOrder">ثبت نهایی</button>
+        </div>
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-secondary" asp-controller="Cart" asp-action="index">بازگشت به سبد خرید</a>
-        <a class="btn btn-primary" asp-controller="Order" asp-action="SubmitOrder">ثبت نهایی</a>
-    </div>
-
-
+</form>
 </body>
 </html>
 
@@ -73,20 +76,23 @@
     function SubmitDiscount() {
 
         var code = $("#discount").val();
-        var finalprice = $("#finalPrice").text();
+        var finalprice = $("#finalPrice").val();
+        if (code != "") {
         $.ajax({
             type: 'POST',
             contentType: "application/json",
             url: '/Order/SubmitDiscount',
             data: JSON.stringify({ code, finalprice }),
-            success: function (result) {                
-                $("#totalPrice").text(result).append('<del> ' + finalprice + '</del>') 
+            success: function (result) {
+                console.log(result.finalFactorResult);
+                $("#totalPrice").text(result.finalFactorResult).append('<del> ' + finalprice + '</del>'); 
+                $("#discountId").val(result.discountId);
             },
-            //error: function () {
-            //    alert('Failed to receive the Data');
-            //    console.log('Failed ');
-            //}
+            error: function () {
+                alert('کد تخفیف نا معتبر است');
+            }
         })
+        }
     }
 
 </script>

@@ -32,17 +32,19 @@ namespace MyOnlineShop.Controllers
             {
                 FragileItems = _orderService.GetFragileItems(cart),
                 NormalItems = _orderService.GetNormalItems(cart),
-                TotalPrice = _orderService.GetTotalPrice(cart)
+                Finalprice = _orderService.GetTotalPrice(cart)
             };
 
             return View(orderViewModel);
         }
 
-        public IActionResult SubmitOrder()
+        [HttpPost]
+        public IActionResult SubmitOrder(OrderViewModel orderViewModel)
         {
             var order = new Order
             {
-                OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart")
+                OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart"),
+                DiscountId = orderViewModel.DiscountId
             };
 
             if (_orderService.SubmitOrder(order))

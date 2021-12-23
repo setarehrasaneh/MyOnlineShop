@@ -1,4 +1,5 @@
-﻿using MyOnlineShop.Domain.Entities;
+﻿using MyOnlineShop.Domain.Dtos;
+using MyOnlineShop.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,6 @@ namespace MyOnlineShop.Domain.Service
         List<OrderItem> GetNormalItems(List<OrderItem> orderItems);
         List<OrderItem> GetFragileItems(List<OrderItem> orderItems);
         bool SubmitOrder(Order order);
-        decimal GetFactorTotalPrice(string code, decimal totalPrice);
+        DiscountResultDto GetFactorTotalPrice(string code, decimal totalPrice);
     }
 }

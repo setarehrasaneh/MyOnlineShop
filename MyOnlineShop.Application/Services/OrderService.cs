@@ -1,4 +1,5 @@
-﻿using MyOnlineShop.Domain.Entities;
+﻿using MyOnlineShop.Domain.Dtos;
+using MyOnlineShop.Domain.Entities;
 using MyOnlineShop.Domain.Enums;
 using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.Domain.Service;
@@ -47,25 +48,27 @@ namespace MyOnlineShop.Application.Services
             return orderItems;
             }
 
-        public decimal GetFactorTotalPrice(string code, decimal totalPrice)
+        public DiscountResultDto GetFactorTotalPrice(string code, decimal totalPrice)
         {
             var discount = _discountRepository.FindDiscount(code);
-
+            var result = new DiscountResultDto();
             if (discount != null)
-            {
+            {                
+                result.DiscountId = discount.Id;
                 if (discount.DiscountType == DiscountType.Amount)
                 {
-                    return totalPrice - discount.Value;
+                    result.FinalFactorResult = totalPrice - discount.Value;
                 }
                 else
                 {
-                    return totalPrice - (totalPrice * discount.Value / 100);
+                    result.FinalFactorResult = totalPrice - (totalPrice * discount.Value / 100);
                 }
             }
             else
             {
-                return 0;
+                throw new Exception("کد معتبر نمی باشد");
             }
+            return result;
         }
 
         public List<OrderItem> GetFragileItems(List<OrderItem> orderItems)

@@ -10,7 +10,8 @@ namespace MyOnlineShop.Models
     {
         public List<OrderItem> NormalItems { get; set; }
         public List<OrderItem> FragileItems { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal Finalprice { get; set; }
+        public int  DiscountId { get; set; }
 
     }
 }
