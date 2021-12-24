@@ -1,13 +1,8 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyOnlineShop.Domain.Entities;
 using MyOnlineShop.Domain.Helpers;
-using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.Domain.Service;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyOnlineShop.Controllers
 {

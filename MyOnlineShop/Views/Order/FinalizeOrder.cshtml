@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <h3 class="text-center">شیوه ارسال</h3>
-    <input class="text-hide" asp-for="Finalprice" id="finalPrice" />
-    <input class="text-hide" asp-for=@Model.DiscountId id="discountId" />
     <form method="post">
+        <h3 class="text-center">شیوه ارسال</h3>
+        <input class="text-hide" asp-for="Finalprice" id="finalPrice" />
+        <input class="text-hide" asp-for=@Model.DiscountId id="discountId" />
+
         <div class="row">
             @if (Model.FragileItems.Count != 0)
             {

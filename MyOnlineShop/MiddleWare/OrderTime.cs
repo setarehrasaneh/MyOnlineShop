@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyOnlineShop.MiddleWare
@@ -26,7 +27,7 @@ namespace MyOnlineShop.MiddleWare
 
                 if (! (currentHour > 8 && currentHour <= 19))
                 {
-                    httpContext.Response.StatusCode = StatusCodes.Status503ServiceUnavailable ;
+                   await httpContext.Response.WriteAsync("Order Registraion Only Possible In 8:00 -19:00" , Encoding.UTF8) ;
                 }
                 else
                 {
