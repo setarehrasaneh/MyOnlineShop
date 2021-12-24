@@ -90,6 +90,14 @@ namespace MyOnlineShop.Application.Services
             return 0;
         }
 
+        public void IsTotalPriceInRange(List<OrderItem> orderItems)
+        {
+            if (GetTotalPrice(orderItems) < 50000)
+            {
+                throw new Exception("Price Not In Range");
+            }
+        }
+
         public List<OrderItem> RemoveItemFromOrder(List<OrderItem> orderItems, int id)
         {
             int index = orderItems.FindIndex(a => a.Product.ProductId == id);

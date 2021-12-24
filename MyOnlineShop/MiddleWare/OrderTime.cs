@@ -27,7 +27,7 @@ namespace MyOnlineShop.MiddleWare
 
                 if (! (currentHour > 8 && currentHour <= 19))
                 {
-                   await httpContext.Response.WriteAsync("Order Registraion Only Possible In 8:00 -19:00" , Encoding.UTF8) ;
+                    await httpContext.Response.WriteAsync("Order Registraion Only Possible In 8:00 -19:00" , Encoding.UTF8) ;
                 }
                 else
                 {

@@ -22,37 +22,40 @@ namespace MyOnlineShop.Controllers
         public IActionResult FinalizeOrder()
         {
             var cart = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart");
-
-            if (_orderService.GetTotalPrice(cart) < 50000)
+            try
             {
-                throw new Exception("ثبت سفارش برای مبالغ کمتر از 50000 امکان پذیر نمیباشد");
+               _orderService.IsTotalPriceInRange(cart);
+                    OrderViewModel orderViewModel = new OrderViewModel
+                    {
+                        FragileItems = _orderService.GetFragileItems(cart),
+                        NormalItems = _orderService.GetNormalItems(cart),
+                        Finalprice = _orderService.GetTotalPrice(cart)
+                    };
+
+                return View(orderViewModel);
             }
-
-            OrderViewModel orderViewModel = new OrderViewModel
+            catch(Exception e)
             {
-                FragileItems = _orderService.GetFragileItems(cart),
-                NormalItems = _orderService.GetNormalItems(cart),
-                Finalprice = _orderService.GetTotalPrice(cart)
-            };
-
-            return View(orderViewModel);
+                ViewBag.ErrorTitle = "خطا در ثبت سفارش";
+                ViewBag.ErrorMessage = "ثبت سفارش با مبالغ کمتر از 50000 تومان امکانپذیر نمی باشد";
+                return View("Error");
+            }
         }
 
         [HttpPost]
         public IActionResult SubmitOrder(OrderViewModel orderViewModel)
         {
-            var order = new Order
-            {
-                OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart"),
-                DiscountId = orderViewModel.DiscountId
-            };
+                var order = new Order
+                {
+                    OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart"),
+                    DiscountId = orderViewModel.DiscountId
+                };
 
-            if (_orderService.SubmitOrder(order))
-            {
-                HttpContext.Session.Clear();
-            };
-           
-            return View();
+                if (_orderService.SubmitOrder(order))
+                {
+                    HttpContext.Session.Clear();
+                };
+                return View();
         }
 
         [HttpPost]

@@ -15,5 +15,6 @@ namespace MyOnlineShop.Domain.Service
         List<OrderItem> GetFragileItems(List<OrderItem> orderItems);
         bool SubmitOrder(Order order);
         DiscountResultDto GetFactorTotalPrice(string code, decimal totalPrice);
+        void IsTotalPriceInRange(List<OrderItem> orderItems);
     }
 }
