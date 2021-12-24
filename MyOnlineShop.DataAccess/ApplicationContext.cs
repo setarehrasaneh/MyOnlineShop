@@ -33,7 +33,8 @@ namespace MyOnlineShop.InfraStructure
             new Product { ProductId = 1, Name = "تیشرت مردانه", Description = "تیشرت نخی مردانه", ProductType = ProductType.Normal, Price = Decimal.Parse("70000.00"), Profit = Decimal.Parse("0") },
             new Product { ProductId = 2, Name = "گلدان شیشه ای", Description = "گلدان شیشه ای متوسط", ProductType = ProductType.Fragile, Price = Decimal.Parse("190000.00"), Profit = Decimal.Parse("80000") },
             new Product { ProductId = 3, Name = "دستبند طلا", Description = "دستبند زنجیر دار", ProductType = ProductType.Normal, Price = Decimal.Parse("8700000.00"), Profit = Decimal.Parse("0") },
-            new Product { ProductId = 4, Name = "سرویس چای خوری", Description = "سرویس چای خوری کریستال", ProductType = ProductType.Fragile, Price = Decimal.Parse("500000.00"), Profit = Decimal.Parse("0") });
+            new Product { ProductId = 4, Name = "سرویس چای خوری", Description = "سرویس چای خوری کریستال", ProductType = ProductType.Fragile, Price = Decimal.Parse("500000.00"), Profit = Decimal.Parse("0") },
+            new Product { ProductId = 6, Name = "دمپایی", Description = "دمپایی پلاستیکی", ProductType = ProductType.Normal, Price = Decimal.Parse("30000.00"), Profit = Decimal.Parse("0") });
 
 
 
