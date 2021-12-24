@@ -54,7 +54,23 @@ namespace MyOnlineShop.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Discount");
+                    b.ToTable("Discounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "123-abc",
+                            DiscountType = 1,
+                            Value = 10000m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "456-def",
+                            DiscountType = 2,
+                            Value = 50m
+                        });
                 });
 
             modelBuilder.Entity("MyOnlineShop.Domain.Entities.Order", b =>
@@ -67,7 +83,7 @@ namespace MyOnlineShop.DataAccess.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DiscountId")
+                    b.Property<int>("DiscountId")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
@@ -132,6 +148,53 @@ namespace MyOnlineShop.DataAccess.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 5,
+                            Description = "کفش چرم زنانه",
+                            Name = "کفش زنانه",
+                            Price = 190000.00m,
+                            ProductType = 1,
+                            Profit = 200000m
+                        },
+                        new
+                        {
+                            ProductId = 1,
+                            Description = "تیشرت نخی مردانه",
+                            Name = "تیشرت مردانه",
+                            Price = 70000.00m,
+                            ProductType = 1,
+                            Profit = 0m
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            Description = "گلدان شیشه ای متوسط",
+                            Name = "گلدان شیشه ای",
+                            Price = 190000.00m,
+                            ProductType = 2,
+                            Profit = 80000m
+                        },
+                        new
+                        {
+                            ProductId = 3,
+                            Description = "دستبند زنجیر دار",
+                            Name = "دستبند طلا",
+                            Price = 8700000.00m,
+                            ProductType = 1,
+                            Profit = 0m
+                        },
+                        new
+                        {
+                            ProductId = 4,
+                            Description = "سرویس چای خوری کریستال",
+                            Name = "سرویس چای خوری",
+                            Price = 500000.00m,
+                            ProductType = 2,
+                            Profit = 0m
+                        });
                 });
 
             modelBuilder.Entity("MyOnlineShop.Domain.Entities.Order", b =>
@@ -142,7 +205,9 @@ namespace MyOnlineShop.DataAccess.Migrations
 
                     b.HasOne("MyOnlineShop.Domain.Entities.Discount", "Discount")
                         .WithMany()
-                        .HasForeignKey("DiscountId");
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Discount");
                 });

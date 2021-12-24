@@ -8,5 +8,6 @@ namespace MyOnlineShop.Domain.Entities
         public string Code { get; set; }
         public DiscountType DiscountType { get; set; }
         public decimal Value { get; set; }
+
     }
 }
