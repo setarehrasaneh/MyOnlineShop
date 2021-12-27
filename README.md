@@ -1,1 +1,1 @@
-# MyOnlineShop
+please check ReadMe.docx file
