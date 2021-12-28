@@ -8,6 +8,7 @@ namespace MyOnlineShop.Domain.Repositories
 {
     public interface IOrderRepository
     {
+        //submit order to table async
         Task<bool> SubmitOrder(Order order);
     }
 }

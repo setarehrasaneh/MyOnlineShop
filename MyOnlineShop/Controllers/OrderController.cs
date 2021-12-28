@@ -36,8 +36,8 @@ namespace MyOnlineShop.Controllers
             }
             catch(Exception e)
             {
-                ViewBag.ErrorTitle = "خطا در ثبت سفارش";
-                ViewBag.ErrorMessage = "ثبت سفارش با مبالغ کمتر از 50000 تومان امکانپذیر نمی باشد";
+                ViewBag.ErrorTitle = "error in order Registration";
+                ViewBag.ErrorMessage = "Can Not Register Order Whit Less Than 50000 Total Amount ";
                 return View("Error");
             }
         }

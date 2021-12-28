@@ -7,6 +7,7 @@ namespace MyOnlineShop.Domain.Repositories
 {
     public interface IDiscountRepository
     {
+        //find spesific discount with code
         Discount FindDiscount(string code);
     }
 }

@@ -80,7 +80,7 @@ namespace MyOnlineShop.Application.Services
                 }
                 else
                 {
-                    throw new Exception("کد معتبر نمی باشد");
+                    throw new Exception("Code Is Invalid");
                 }
                 return result;
             }
