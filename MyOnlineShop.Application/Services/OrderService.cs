@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyOnlineShop.Application.Services
 {
@@ -26,49 +27,67 @@ namespace MyOnlineShop.Application.Services
             this._productRepository = productRepository;
             this._orderRepository = orderRepository;
             this._discountRepository = discountRepository;
-        } 
-        public List<OrderItem> AddItemsToOrder(List<OrderItem> orderItems , int id)
+        }
+        public List<OrderItem> AddItemsToOrder(List<OrderItem> orderItems, int id)
         {
-            if (orderItems == null)
+            try
             {
-                orderItems = new List<OrderItem>();
-                orderItems.Add(new OrderItem { Product = _productRepository.GetAll().Find(x => x.ProductId == id), Qty = 1 });
+                var products = _productRepository.GetAll().Result;
+
+                if (orderItems == null)
+                {
+                    orderItems = new List<OrderItem>();
+
+                    orderItems.Add(new OrderItem { Product = products.Find(x => x.ProductId == id), Qty = 1 });
+                    return orderItems;
+                }
+
+                int index = orderItems.FindIndex(a => a.Product.ProductId == id);
+                if (index != -1)
+                {
+                    orderItems[index].Qty++;
+                }
+                else
+                {
+                    orderItems.Add(new OrderItem { Product = products.Find(x => x.ProductId == id), Qty = 1 });
+                }
                 return orderItems;
             }
+            catch (Exception ex)
+            {
 
-            int index = orderItems.FindIndex(a => a.Product.ProductId == id);
-            if (index != -1)
-            {
-                orderItems[index].Qty++;
+                return orderItems;
             }
-            else
-            {
-                orderItems.Add(new OrderItem { Product = _productRepository.GetAll().Find(x => x.ProductId == id), Qty = 1});
-            }
-            return orderItems;
-            }
+        }
 
         public DiscountResultDto GetFactorTotalPrice(string code, decimal totalPrice)
         {
             var discount = _discountRepository.FindDiscount(code);
             var result = new DiscountResultDto();
-            if (discount != null)
-            {                
-                result.DiscountId = discount.Id;
-                if (discount.DiscountType == DiscountType.Amount)
+            try
+            {
+                if (discount != null)
                 {
-                    result.FinalFactorResult = totalPrice - discount.Value;
+                    result.DiscountId = discount.Id;
+                    if (discount.DiscountType == DiscountType.Amount)
+                    {
+                        result.FinalFactorResult = totalPrice - discount.Value;
+                    }
+                    else
+                    {
+                        result.FinalFactorResult = totalPrice - (totalPrice * discount.Value / 100);
+                    }
                 }
                 else
                 {
-                    result.FinalFactorResult = totalPrice - (totalPrice * discount.Value / 100);
+                    throw new Exception("کد معتبر نمی باشد");
                 }
+                return result;
             }
-            else
+            catch (Exception ex)
             {
-                throw new Exception("کد معتبر نمی باشد");
+                return result;
             }
-            return result;
         }
 
         public List<OrderItem> GetFragileItems(List<OrderItem> orderItems)
@@ -100,14 +119,22 @@ namespace MyOnlineShop.Application.Services
 
         public List<OrderItem> RemoveItemFromOrder(List<OrderItem> orderItems, int id)
         {
-            int index = orderItems.FindIndex(a => a.Product.ProductId == id);
-            orderItems.RemoveAt(index);
-            return orderItems;
+            try
+            {
+                int index = orderItems.FindIndex(a => a.Product.ProductId == id);
+                orderItems.RemoveAt(index);
+                return orderItems;
+            }
+            catch (Exception ex)
+            {
+                return orderItems;
+            }
+
         }
 
-        public bool SubmitOrder(Order order)
+        public async Task<bool> SubmitOrder(Order order)
         {
-           return _orderRepository.SubmitOrder(order);
+            return await _orderRepository.SubmitOrder(order);
         }
     }
 }

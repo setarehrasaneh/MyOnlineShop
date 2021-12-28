@@ -5,6 +5,7 @@ using MyOnlineShop.InfraStructure;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyOnlineShop.DataAccess.Repositories
 {
@@ -16,12 +17,12 @@ namespace MyOnlineShop.DataAccess.Repositories
         {
             this._context = context;
         }
-        public bool SubmitOrder(Order order)
+        public async Task<bool> SubmitOrder(Order order)
         {
             try
             {
-                _context.Orders.Add(order);
-                order.OrderItems.ForEach(x => _context.Products.Attach(x.Product));        
+                await _context.Orders.AddAsync(order);
+                order.OrderItems.ForEach(x => _context.Products.Attach(x.Product));
                 _context.SaveChanges();
                 return true;
 
