@@ -22,11 +22,16 @@ namespace MyOnlineShop.DataAccess.Repositories
             {
                 _context.Orders.Add(order);
                 order.OrderItems.ForEach(x => _context.Products.Attach(x.Product));
+                if (order.Discount == null)
+                {
+                    _context.Entry(order.Discount).State = EntityState.Unchanged;
+                }
+        
                 _context.SaveChanges();
                 return true;
 
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
