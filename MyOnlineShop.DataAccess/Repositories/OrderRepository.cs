@@ -21,7 +21,6 @@ namespace MyOnlineShop.DataAccess.Repositories
             try
             {
                 _context.Orders.Add(order);
-                order.OrderItems.ForEach(x => _context.Products.Attach(x.Product));
                 _context.SaveChanges();
                 return true;
 
