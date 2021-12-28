@@ -19,7 +19,7 @@ namespace MyOnlineShop.Controllers
         }
         public IActionResult Index()
         {
-            var product = _productRepository.GetAll().Result.ToList();
+            var product = _productRepository.GetAll().ToList();
             return View(product);
         }
     }
