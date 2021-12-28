@@ -33,7 +33,8 @@ namespace MyOnlineShop.Application.Services
             try
             {
                 var products = _productRepository.GetAll().Result;
-
+                
+                //first item add to cart
                 if (orderItems == null)
                 {
                     orderItems = new List<OrderItem>();
@@ -41,12 +42,14 @@ namespace MyOnlineShop.Application.Services
                     orderItems.Add(new OrderItem { Product = products.Find(x => x.ProductId == id), Qty = 1 });
                     return orderItems;
                 }
-
+                
                 int index = orderItems.FindIndex(a => a.Product.ProductId == id);
+                //item exist in cart
                 if (index != -1)
                 {
                     orderItems[index].Qty++;
                 }
+                //item added to cart for the first time
                 else
                 {
                     orderItems.Add(new OrderItem { Product = products.Find(x => x.ProductId == id), Qty = 1 });
@@ -69,10 +72,12 @@ namespace MyOnlineShop.Application.Services
                 if (discount != null)
                 {
                     result.DiscountId = discount.Id;
+                    //calculate total price for amount discount
                     if (discount.DiscountType == DiscountType.Amount)
                     {
                         result.FinalFactorResult = totalPrice - discount.Value;
                     }
+                    //calculate total price for percent discount
                     else
                     {
                         result.FinalFactorResult = totalPrice - (totalPrice * discount.Value / 100);

@@ -26,7 +26,7 @@ namespace MyOnlineShop.InfraStructure
 
             modelBuilder.Entity<Discount>().HasData(
                  new { Id = 1, Code = "123-abc", DiscountType = DiscountType.Amount, Value = Decimal.Parse("10000") },
-                 new { Id = 2, Code = "456-def", DiscountType = DiscountType.percent, Value = Decimal.Parse("50") });
+                 new { Id = 2, Code = "456-def", DiscountType = DiscountType.Percent, Value = Decimal.Parse("50") });
 
             modelBuilder.Entity<Product>().HasData(
             new Product { ProductId = 5, Name = "کفش زنانه", Description = "کفش چرم زنانه", ProductType = ProductType.Normal, Price = Decimal.Parse("190000.00"), Profit = Decimal.Parse("200000") },
