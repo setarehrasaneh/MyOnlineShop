@@ -1,8 +1,10 @@
-﻿using MyOnlineShop.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MyOnlineShop.Domain.Entities;
 using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.InfraStructure;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MyOnlineShop.DataAccess.Repositories
 {
@@ -15,9 +17,9 @@ namespace MyOnlineShop.DataAccess.Repositories
             this._context = context;
         }
 
-        public List<Product> GetAll()
+        public async Task<List<Product>> GetAll()
         {
-            return _context.Products.ToList();
+            return await _context.Products.ToListAsync();
         }
     }
 }

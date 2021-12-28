@@ -1,10 +1,11 @@
 ﻿using MyOnlineShop.Domain.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyOnlineShop.Domain.Repositories
 {
     public interface IProductRepository
     {
-        List<Product> GetAll();
+        Task<List<Product>> GetAll();
     }
 }

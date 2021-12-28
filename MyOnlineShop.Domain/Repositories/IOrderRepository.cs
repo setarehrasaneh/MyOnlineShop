@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MyOnlineShop.Domain.Repositories
 {
     public interface IOrderRepository
     {
-        bool SubmitOrder(Order order);
+        Task<bool> SubmitOrder(Order order);
     }
 }

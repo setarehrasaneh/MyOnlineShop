@@ -51,7 +51,7 @@ namespace MyOnlineShop.Controllers
                     DiscountId = orderViewModel.DiscountId
                 };
 
-                if (_orderService.SubmitOrder(order))
+                if (_orderService.SubmitOrder(order).Result)
                 {
                     HttpContext.Session.Clear();
                 };
