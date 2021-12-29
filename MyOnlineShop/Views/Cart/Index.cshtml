@@ -1,4 +1,5 @@
-﻿<html dir="rtl" lang="ar">
+﻿
+<html dir="rtl" lang="fa">
 <head>
     <meta name="viewport" content="width=device-width" />
 </head>
@@ -7,15 +8,15 @@
 
         @if (ViewBag.cart != null)
         {
-            <h3 class="text-center">سبد خرید</h3>
+            <h3 class="text-center">@Localizer["Cart"]</h3>
             <table cellpadding="2" cellspacing="2" border="1" class="table">
                 <tr>
-                    <th class="table-dark text-center">عملیات</th>
-                    <th class="table-dark text-center">نام کالا</th>
-                    <th class="table-dark text-center">قیمت واحد</th>
-                    <th class="table-dark text-center">سود</th>
-                    <th class="table-dark text-center">تعداد</th>
-                    <th class="table-dark text-center">جمع مبلغ</th>
+                    <th class="table-dark text-center">@Localizer["Operation"]</th>
+                    <th class="table-dark text-center">@Localizer["ProductName"]</th>
+                    <th class="table-dark text-center">@Localizer["UnitPrice"]</th>
+                    <th class="table-dark text-center">@Localizer["Profit"]</th>
+                    <th class="table-dark text-center">@Localizer["Qty"]</th>
+                    <th class="table-dark text-center">@Localizer["SumOfPrice"]</th>
                 </tr>
                 @foreach (var item in ViewBag.cart)
                 {
@@ -29,7 +30,7 @@
                     </tr>
                 }
                 <tr>
-                    <td align="right" colspan="6">جمع فاکتور</td>
+                    <td align="right" colspan="6">@Localizer["SumOfFactorPrice"]</td>
                     <td>
                         @ViewBag.total
                     </td>
@@ -37,13 +38,13 @@
             </table>
             <br>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a class="btn btn-secondary" asp-controller="Home" asp-action="index">بازگشت به فروشگاه</a>
-                <a class="btn btn-primary me-md-2" asp-controller="Order" asp-action="FinalizeOrder">ادامه خرید</a>
+                <a class="btn btn-secondary" asp-controller="Home" asp-action="index">@Localizer["ReturnToStore"]</a>
+                <a class="btn btn-primary me-md-2" asp-controller="Order" asp-action="FinalizeOrder">@Localizer["Continue"]</a>
             </div>
         }
         else
         {
-            <h1 class="text-center">سبد خرید خالی است</h1>
+            <h1 class="text-center">@Localizer["CartIsEmpty"]</h1>
         }
     </div>
 </body>

@@ -1,12 +1,12 @@
 ﻿@model MyOnlineShop.Models.OrderViewModel
 
-<html dir="rtl" lang="ar">
+<html dir="rtl" lang="fa">
 <head>
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
     <form method="post">
-        <h3 class="text-center">شیوه ارسال</h3>
+        <h3 class="text-center">@Localizer["SendingMethod"]</h3>
         <input class="text-hide" asp-for="Finalprice" id="finalPrice" />
         <input class="text-hide" asp-for=@Model.DiscountId id="discountId" />
 
@@ -16,10 +16,10 @@
                 <div class="col-md-6">
                     <table cellpadding="2" cellspacing="2" border="1" class="table">
                         <tr class="text-center table-danger">
-                            <th>ارسال با پست پیشتاز</th>
+                            <th>@Localizer["ExpressPost"]</th>
                         </tr>
                         <tr class="text-center">
-                            <th class="table-dark">نام کالا</th>
+                            <th class="table-dark">@Localizer["ProductName"]</th>
                         </tr>
                         @foreach (var item in Model.FragileItems)
                         {
@@ -36,10 +36,10 @@
                 <div class="col-md-6">
                     <table cellpadding="2" cellspacing="2" border="1" class="table">
                         <tr class="text-center  table-success">
-                            <th>ارسال عادی</th>
+                            <th>@Localizer["NormalPost"]</th>
                         </tr>
                         <tr class="text-center">
-                            <th class="table-dark">نام کالا</th>
+                            <th class="table-dark">@Localizer["ProductName"]</th>
                         </tr>
                         @foreach (var item in Model.NormalItems)
                         {
@@ -53,18 +53,18 @@
         </div>
 
         <div class="input-group">
-            <input type="text" class="form-control" id="discount" placeholder="کد تخفیف">
-            <a class="btn btn-outline-secondary" onclick="SubmitDiscount()">اعمال کد تخفیف</a>
+            <input type="text" class="form-control" id="discount" placeholder=@Localizer["DiscountCode"]>
+            <a class="btn btn-outline-secondary" onclick="SubmitDiscount()">@Localizer["ApplyDiscountCode"]</a>
         </div>
-
-        <div class="row">جمع فاکتور</div>
+        
+        <div class="row">@Localizer["SumOfFactorPrice"]</div>
         <div class="alert-info" align="right">
             <span id="totalPrice"> @Model.Finalprice</span>
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-            <a class="btn btn-secondary" asp-controller="Cart" asp-action="index">بازگشت به سبد خرید</a>
-            <button class="btn btn-primary" asp-controller="Order" asp-action="SubmitOrder">ثبت نهایی</button>
+            <a class="btn btn-secondary" asp-controller="Cart" asp-action="index">@Localizer["ReturnToStore"]</a>
+            <button class="btn btn-primary" asp-controller="Order" asp-action="SubmitOrder">@Localizer["FinalRegistration"]</button>
         </div>
 
     </form>

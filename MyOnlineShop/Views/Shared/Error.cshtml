@@ -1,15 +1,15 @@
-﻿<html dir="rtl" lang="ar">
+﻿<html dir="rtl" lang="fa">
 
 @if (ViewBag.ErrorTitle == null)
 {
-    <h3>
+    <h3 class="text-danger text-center">
         در پردازش درخواست شما مشکلی بوجود آمده .
     </h3>
 }
 else
 {
-    <h1 class="text-danger">@ViewBag.ErrorTitle</h1>
-    <h6 class="text-danger">@ViewBag.ErrorMessage</h6>
+    <h1 class="text-danger text-center">@ViewBag.ErrorTitle</h1>
+    <h6 class="text-danger text-center">@ViewBag.ErrorMessage</h6>
 }
 
 </html>
