@@ -92,6 +92,9 @@ namespace MyOnlineShop
 
 
             app.UseSession();
+
+
+            // Middleware For Controll Time Constraint
             app.UseOrderTime();
 
             app.UseStaticFiles();
