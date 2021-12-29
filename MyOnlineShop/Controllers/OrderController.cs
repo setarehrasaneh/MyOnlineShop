@@ -48,8 +48,7 @@ namespace MyOnlineShop.Controllers
         [HttpPost]
         public IActionResult SubmitOrder(OrderViewModel orderViewModel)
         {
-            try
-            {
+
                 var order = new Order
                 {
                     OrderItems = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart"),
@@ -61,25 +60,16 @@ namespace MyOnlineShop.Controllers
                     HttpContext.Session.Clear();
                 };
                 return View();
-            }
-            catch (Exception e)
-            {
-                return View("Error");
-            }
         }
+
 
         [HttpPost]
         public IActionResult SubmitDiscount([FromBody] DiscountViewModel discountViewModel)
         {
-            try
-            {
-                var result = _orderService.GetFactorTotalPrice(discountViewModel.Code, decimal.Parse(discountViewModel.FinalPrice));
-                return Json(result);
-            }
-            catch (Exception e)
-            {
-                return View("Error");
-            }
+
+            var result = _orderService.GetFactorTotalPrice(discountViewModel.Code, decimal.Parse(discountViewModel.FinalPrice));
+            return Json(result);
+
         }
     }
 }
