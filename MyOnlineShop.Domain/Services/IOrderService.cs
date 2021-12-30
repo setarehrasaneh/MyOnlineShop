@@ -12,7 +12,7 @@ namespace MyOnlineShop.Domain.Service
         //return total price of cart
         decimal GetTotalPrice(List<OrderItem> orderItems);
         //add an orderItem with id to cart , get old cart list and return new one 
-        List<OrderItem> AddItemsToOrder(List<OrderItem> orderItems, int id);
+        Task<List<OrderItem>> AddItemsToOrder(List<OrderItem> orderItems, int id);
         //add an order to table  
         Task<bool> SubmitOrder(Order order);
         //remove an orderItem with id from cart,get old cart list and return new one  

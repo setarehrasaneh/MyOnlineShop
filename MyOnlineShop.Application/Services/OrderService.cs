@@ -29,18 +29,18 @@ namespace MyOnlineShop.Application.Services
             this._orderRepository = orderRepository;
             this._discountRepository = discountRepository;
         }
-        public List<OrderItem> AddItemsToOrder(List<OrderItem> orderItems, int id)
+        public async Task<List<OrderItem>> AddItemsToOrder(List<OrderItem> orderItems, int id)
         {
             try
             {
-                var products = _productRepository.GetAll().Result;
+                var products = await _productRepository.GetAll();
                 
                 //first item add to cart
                 if (orderItems == null)
                 {
                     orderItems = new List<OrderItem>();
 
-                    orderItems.Add(new OrderItem { Product = products.Find(x => x.ProductId == id), Qty = 1 });
+                    orderItems.Add(new OrderItem { Product = await Task.Run (()=> products.Find(x => x.ProductId == id)), Qty = 1 });
                     return orderItems;
                 }
                 
@@ -53,7 +53,7 @@ namespace MyOnlineShop.Application.Services
                 //item added to cart for the first time
                 else
                 {
-                    orderItems.Add(new OrderItem { Product = products.Find(x => x.ProductId == id), Qty = 1 });
+                    orderItems.Add(new OrderItem { Product = await Task.Run(() => products.Find(x => x.ProductId == id)), Qty = 1 });
                 }
                 return orderItems;
             }

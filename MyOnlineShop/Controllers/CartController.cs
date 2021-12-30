@@ -4,6 +4,7 @@ using MyOnlineShop.Domain.Helpers;
 using MyOnlineShop.Domain.Service;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyOnlineShop.Controllers
 {
@@ -17,28 +18,28 @@ namespace MyOnlineShop.Controllers
             this._orderService = orderService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            var cart = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart");
+            var cart = await Task.Run(() => SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart"));
             ViewBag.cart = cart;
-            ViewBag.total = _orderService.GetTotalPrice(cart);
+            ViewBag.total =  _orderService.GetTotalPrice(cart);
             return View();
         }
 
-        public IActionResult AddToCart(int id)
+        public async Task<IActionResult> AddToCart(int id)
         {
 
-            List<OrderItem> cart = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart");
-            var newCart = _orderService.AddItemsToOrder(cart, id);
+            List<OrderItem> cart = await Task.Run(() => SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart"));
+            var newCart = await _orderService.AddItemsToOrder(cart, id);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", newCart);
             return RedirectToAction("Index");
  
         }
 
-        public IActionResult RemoveFromCart(int id)
+        public async Task<IActionResult> RemoveFromCart(int id)
         {
-            List<OrderItem> cart = SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart");
+            List<OrderItem> cart = await Task.Run(()=> SessionHelper.GetObjectFromJson<List<OrderItem>>(HttpContext.Session, "cart"));
             var newCart = _orderService.RemoveItemFromOrder(cart, id);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", newCart);
             return RedirectToAction("Index");

@@ -17,9 +17,9 @@ namespace MyOnlineShop.Controllers
         {
             this._productRepository = productRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var product = _productRepository.GetAll().Result.ToList();
+            var product = await _productRepository.GetAll();
             return View(product);
         }
     }
