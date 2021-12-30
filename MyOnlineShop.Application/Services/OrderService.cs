@@ -1,6 +1,7 @@
 ﻿using MyOnlineShop.Domain.Dtos;
 using MyOnlineShop.Domain.Entities;
 using MyOnlineShop.Domain.Enums;
+using MyOnlineShop.Domain.Exceptions;
 using MyOnlineShop.Domain.Repositories;
 using MyOnlineShop.Domain.Service;
 using System;
@@ -118,7 +119,7 @@ namespace MyOnlineShop.Application.Services
         {
             if (GetTotalPrice(orderItems) < 50000)
             {
-                throw new Exception("Price Not In Range");
+                throw new OrderTimeNotInRangeException("Price Not In Range");
             }
         }
 
