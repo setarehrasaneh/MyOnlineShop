@@ -14,7 +14,7 @@ namespace MyOnlineShop.Domain.Service
         //add an orderItem with id to cart , get old cart list and return new one 
         List<OrderItem> AddItemsToOrder(List<OrderItem> orderItems, int id);
         //add an order to table  
-        bool SubmitOrder(Order order);
+        Task<bool> SubmitOrder(Order order);
         //remove an orderItem with id from cart,get old cart list and return new one  
         List<OrderItem> RemoveItemFromOrder(List<OrderItem> orderItems, int id);
         // extract Items Of Cart whith Type of Normal 

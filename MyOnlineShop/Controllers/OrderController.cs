@@ -7,6 +7,7 @@ using MyOnlineShop.Domain.Service;
 using MyOnlineShop.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyOnlineShop.Controllers
 {
@@ -46,7 +47,7 @@ namespace MyOnlineShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubmitOrder(OrderViewModel orderViewModel)
+        public async Task<IActionResult> SubmitOrder(OrderViewModel orderViewModel)
         {
 
                 var order = new Order
@@ -55,7 +56,7 @@ namespace MyOnlineShop.Controllers
                     DiscountId = orderViewModel.DiscountId
                 };
 
-                if (_orderService.SubmitOrder(order))
+                if (await _orderService.SubmitOrder(order))
                 {
                     HttpContext.Session.Clear();
                 };
