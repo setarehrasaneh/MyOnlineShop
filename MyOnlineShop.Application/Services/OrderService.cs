@@ -138,9 +138,9 @@ namespace MyOnlineShop.Application.Services
 
         }
 
-        public async Task<bool> SubmitOrder(Order order)
+        public bool SubmitOrder(Order order)
         {
-            return await _orderRepository.SubmitOrder(order);
+            return _orderRepository.SubmitOrder(order);
         }
     }
 }
