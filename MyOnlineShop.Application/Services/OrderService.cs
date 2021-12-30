@@ -140,7 +140,7 @@ namespace MyOnlineShop.Application.Services
 
         public bool SubmitOrder(Order order)
         {
-            return _orderRepository.SubmitOrder(order);
+            return _orderRepository.SubmitOrder(order).Result;
         }
     }
 }
